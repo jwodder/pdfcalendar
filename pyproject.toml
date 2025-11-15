@@ -7,7 +7,7 @@ name = "pdfcalendar"
 dynamic = ["version"]
 description = "Python script for creating a PDF of a multiyear calendar"
 readme = "README.rst"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [
@@ -21,19 +21,13 @@ keywords = [
 classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3.14",
     "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python :: Implementation :: PyPy",
     ###
     "Typing :: Typed",
 ]
 
 dependencies = [
-    "attrs >= 18.1",
+    "attrs >= 20.1",
     "reportlab ~= 3.4",
 ]
 

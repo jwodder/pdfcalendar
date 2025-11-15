@@ -1,55 +1,67 @@
 from __future__ import annotations
 import calendar
 from datetime import date
-import attr
+import attrs
 from reportlab.lib import pagesizes
 from reportlab.pdfgen.canvas import Canvas
 
 
-@attr.s
+@attrs.define
 class CalendarColumn:
-    canvas = attr.ib()
-    font_size = attr.ib()  ### If `None`, use current font size?
-    font_name = attr.ib(default=None)  # If `None`, use current font
-    firstweekday = attr.ib(default=calendar.SUNDAY)
-    month_names = attr.ib(converter=list)  # list of 13 elements
-    week_abbrevs = attr.ib(converter=list)  # list of 7 elements; index 0 = Monday
+    canvas: Canvas
+
+    font_size: float
+
+    #: If `None`, use current font
+    font_name: str | None = None
+
+    firstweekday: calendar.Day = calendar.SUNDAY
+
+    #: list of 13 elements
+    month_names: list[str] = attrs.field(converter=list)
+
+    #: list of 7 elements; index 0 = Monday
+    week_abbrevs: list[str] = attrs.field(converter=list)
+
     #: Whether to rotate the month names such that successive letters are
     #: written downwards (`True`) or upwards (`False`)
-    month_names_downwards = attr.ib(default=True)
-    ###holidays = attr.ib()
+    month_names_downwards: bool = True
 
     @month_names.validator
-    def validate(self, attribute, value):
-        if len(value) != 13 or not all(isinstance(x, str) for x in value[1:]):
+    def _month_names_validator(
+        self, _attrib: attrs.Attribute, value: list[str]
+    ) -> None:
+        if len(value) != 13:
             raise ValueError(value)
 
     @month_names.default
-    def default(self):
+    def _month_names_default(self) -> list[str]:
         # set via function so that the current locale is honored
         return list(calendar.month_name)
 
     @week_abbrevs.validator
-    def validate(self, attribute, value):
-        if len(value) != 7 or not all(isinstance(x, str) for x in value):
+    def _week_abbrevs_validator(
+        self, _attrib: attrs.Attribute, value: list[str]
+    ) -> None:
+        if len(value) != 7:
             raise ValueError(value)
 
     @week_abbrevs.default
-    def default(self):
+    def _week_abbrevs_default(self) -> list[str]:
         # set via function so that the current locale is honored
         return [d[:1] for d in calendar.day_name]
 
     @property
-    def height(self):
+    def height(self) -> float:
         """The maximum height of a rendered calendar"""
         return 56 * self.sqsize
 
     @property
-    def width(self):
+    def width(self) -> float:
         return 8 * self.sqsize
 
     @property
-    def sqsize(self):
+    def sqsize(self) -> float:
         return max(
             self.canvas.stringWidth(
                 "33",
@@ -59,7 +71,7 @@ class CalendarColumn:
             self.font_size * 1.2,
         )
 
-    def top2bl(self, t):
+    def top2bl(self, t: float) -> float:
         """
         Given a y-coordinate (usually the top of a square), return the
         y-coordinate at which text should be drawn so as to appear immediately
@@ -69,7 +81,7 @@ class CalendarColumn:
         # t - sqsize/2 - self.font_size/6
         # t - sqsize/2 - self.font_size/2
 
-    def draw(self, year, x=0, y=0):
+    def draw(self, year: int, x: float = 0, y: float = 0) -> None:
         # x,y: upper-left corner of calendar to render
         self.canvas.saveState()
         if self.font_name is not None:
