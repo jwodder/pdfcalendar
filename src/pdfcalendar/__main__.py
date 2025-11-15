@@ -1,28 +1,9 @@
-#!/usr/bin/env -S pipx run
-# TODO:
-# - Implement holiday highlighting
-#  - Use the `holidays` package?
-# - Handle weekday abbreviations more than one character long
-# - Use small caps for month names?
-# - Use more `calendar` functions
-#  - Use one of the `Calendar` methods instead of `monthrange()`?
-# - Add an option for typesetting months in a grid instead of a column?
-
-# /// script
-# dependencies = ["attrs >= 18.1", "reportlab ~= 3.4"]
-# ///
-
+from __future__ import annotations
 import calendar
 from datetime import date
 import attr
 from reportlab.lib import pagesizes
 from reportlab.pdfgen.canvas import Canvas
-
-# HOLIDAYS = [
-#    ('Christmas', lambda year: date(year, 12, 25), (1, 0, 0)),
-#    ('Easter',
-#    ('Thanksgiving',
-# ]
 
 
 @attr.s
