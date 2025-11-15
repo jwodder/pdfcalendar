@@ -1,9 +1,12 @@
 from __future__ import annotations
+import argparse
 import calendar
 from datetime import date
+import locale
 import attrs
 from reportlab.lib import pagesizes
 from reportlab.pdfgen.canvas import Canvas
+from . import __version__
 
 
 @attrs.define
@@ -181,19 +184,28 @@ class CalendarColumn:
         self.canvas.restoreState()
 
 
-if __name__ == "__main__":
-    import locale
-
+def main() -> None:
     locale.setlocale(locale.LC_ALL, "")
+
+    parser = argparse.ArgumentParser(
+        description="Create a multiyear calendar PDF document"
+    )
+    parser.add_argument("--font-name", default="Times-Roman")
+    parser.add_argument("--font-size", type=int, default=10)
+    parser.add_argument(
+        "-V", "--version", action="version", version=f"%(prog)s {__version__}"
+    )
+    parser.add_argument("outfile")
+    args = parser.parse_args()
 
     start = date.today().year
     qty = 5
 
-    c = Canvas("cal.pdf", pagesizes.letter)
+    c = Canvas(args.outfile, pagesizes.letter)
     calcol = CalendarColumn(
         canvas=c,
-        font_name="Times-Roman",
-        font_size=10,
+        font_name=args.font_name,
+        font_size=args.font_size,
         month_names_downwards=True,
         # firstweekday=calendar.MONDAY,
     )
@@ -212,3 +224,7 @@ if __name__ == "__main__":
         )
     c.showPage()
     c.save()
+
+
+if __name__ == "__main__":
+    main()

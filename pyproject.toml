@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "pdfcalendar"
 dynamic = ["version"]
-description = "Python script for creating a PDF of a multiyear calendar"
+description = "Python script for creating a multiyear calendar PDF document"
 readme = "README.rst"
 requires-python = ">=3.12"
 license = "MIT"
