@@ -18,14 +18,14 @@
 | `Issues <https://github.com/jwodder/pdfcalendar/issues>`_
 
 ``pdfcalendar`` is a Python program for producing a PDF document containing
-calendars for multiple years.  Currently, the output always consists of a page
-containing five annual calendars, each laid out in a column, starting with the
-current year.
+calendars for one or more years.  Currently, the following output styles are
+supported:
 
-See |example.pdf|_ for example output.
+- A page containing five annual calendars, each laid out in a column of weeks,
+  starting with the current year; `example <examples/columns.pdf>`_
 
-.. |example.pdf| replace:: ``example.pdf``
-.. _example.pdf: example.pdf
+- A page containing one annual calendar for the current year with the months
+  laid out in three rows of four each; `example <examples/3x4.pdf>`_
 
 Installation
 ============
@@ -40,11 +40,11 @@ Usage
 
 ::
 
-    pdfcalendar [<options>] <outfile>
+    pdfcalendar {columns|three-by-four} [<options>] <outfile>
 
-Produce a PDF document at ``<outfile>`` containing calendars for multiple
-years.  The month names and weekday abbreviations used are determined based on
-the current locale settings.
+Produce a PDF document at ``<outfile>`` containing calendars for one or more
+years in the given output style.  The month names and weekday abbreviations
+used are determined based on the current locale settings.
 
 Options
 -------
@@ -53,4 +53,5 @@ Options
                             [default: Times-Roman]
 
 --font-size INT             Set the size of the font to use for the text
-                            [default: 10]
+                            [default: 10 for ``columns``, 14 for
+                            ``three-by-four``]

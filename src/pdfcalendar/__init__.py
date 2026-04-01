@@ -1,5 +1,5 @@
 """
-Python program for creating a multiyear calendar PDF document
+Python program for creating a calendar PDF document for one or more years
 
 Visit <https://github.com/jwodder/pdfcalendar> for more information.
 """
