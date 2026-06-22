@@ -34,7 +34,7 @@ classifiers = [
 
 dependencies = [
     "attrs >= 20.1",
-    "reportlab ~= 4.0",
+    "reportlab ~=5.0",
 ]
 
 [project.scripts]
