@@ -19,7 +19,9 @@ def main() -> None:
         "-V", "--version", action="version", version=f"%(prog)s {__version__}"
     )
 
-    subparsers = parser.add_subparsers(title="subcommands", dest="subcommand")
+    subparsers = parser.add_subparsers(
+        title="subcommands", dest="subcommand", required=True
+    )
 
     columns_parser = subparsers.add_parser(
         "columns", help="Display each year as a single column of weeks"
